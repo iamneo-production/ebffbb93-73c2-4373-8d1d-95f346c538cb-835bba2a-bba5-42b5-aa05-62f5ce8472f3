@@ -4,7 +4,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { Avatar, Box, Button, IconButton, InputAdornment, Link, Paper, TextField } from '@mui/material'
 import store from '../store/store'
-import { setIsLogin, setUser } from '../store/reducer';
+import { setIsLogin, setWorker } from '../store/reducer';
 
 export default function Login({ navigate, defaultAvatar }) {
 
@@ -16,30 +16,28 @@ export default function Login({ navigate, defaultAvatar }) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        const users = store.getState().store.users
+        const workers = store.getState().store.workers
         const data = new FormData(e.target)
 
-        users?.map(user => {
-            if (user?.username === data.get('username-email') || user?.email === data.get('username-email')) {
-                if (user?.password === data.get('password')) {
-                    localStorage.setItem('is-login', JSON.stringify(true))
+        workers?.map(worker => {
+            if (worker?.username === data.get('username-email') || worker?.email === data.get('username-email')) {
+                if (worker?.password === data.get('password')) {
                     store.dispatch(setIsLogin(true))
-
-                    store.dispatch(setUser(user))
+                    store.dispatch(setWorker({ ...worker, present: true, time: new Date(new Date().toUTCString()).toLocaleString("en-us", { timeZone: 'Asia/Kolkata' }) }))
         
                     alert('login successful')
                     navigate('/')
+
+                    console.log(new Date(new Date().toUTCString()).toLocaleString("en-us", { timeZone: 'Asia/Kolkata' }))
                     
-                    return user
+                    // store.dispatch(setWorker(user))
                 }
             }
         })
-        
-        // alert("No user found in the database. Try sign up.")
     }
 
     return (
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mt: 15 }}>
+        <Box sx={{ display: 'flex', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
             <Paper component='div' sx={{ display: 'block', padding: '4rem 3rem 3rem 3rem', overflow: 'hidden' }} elevation={3}>
                 <Box sx={{
                     transformOrigin: '50% 100%',
@@ -92,8 +90,8 @@ export default function Login({ navigate, defaultAvatar }) {
                             }} />
 
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <Link sx={{ marginTop: '1.75rem', '&:hover': { color: '#1976FA' } }} underline='hover' href='/sign-up'>Don't have an account? Sign up</Link>
-                            <Button type='submit' sx={{ marginTop: '2rem' }} variant='contained'>Log in</Button>
+                            <Link sx={{ marginTop: '1.75rem', color: 'black', '&:hover': { color: 'orange' } }} underline='hover' href='/sign-up'>Don't have an account? Sign up</Link>
+                            <Button type='submit' sx={{ marginTop: '2rem', backgroundColor: 'black', '&:hover': { color: 'black', backgroundColor: 'white' } }} variant='contained'>Log in</Button>
                         </Box>
                     </Box>
                 </Box>

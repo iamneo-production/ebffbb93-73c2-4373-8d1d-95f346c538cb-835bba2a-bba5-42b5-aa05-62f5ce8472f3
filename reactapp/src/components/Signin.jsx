@@ -5,7 +5,7 @@ import { Avatar, Box, Button, IconButton, InputAdornment, Link, Paper, TextField
 import PersonIcon from '@mui/icons-material/Person';
 import EmailIcon from '@mui/icons-material/Email';
 import store from '../store/store';
-import { setIsLogin, setUser, setUsers } from '../store/reducer';
+import { setIsLogin, setWorker, setWorkers } from '../store/reducer';
 
 export default function SignIn({ navigate, defaultAvatar }) {
 
@@ -21,18 +21,19 @@ export default function SignIn({ navigate, defaultAvatar }) {
         const userDetails = {
             'username': data.get('username'),
             'email': data.get('email'),
-            'password': data.get('password')
+            'password': data.get('password'),
+            'present': true
         }
 
-        store.dispatch(setUsers(userDetails))
-        store.dispatch(setUser(userDetails))
+        store.dispatch(setWorkers(userDetails))
+        store.dispatch(setWorker(userDetails))
 
         store.dispatch(setIsLogin(true))
         navigate('/')
     }
 
     return (
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mt: 15 }}>
+        <Box sx={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <Paper sx={{ display: 'inline-block', padding: '4rem 3rem 3rem 3rem', overflow: 'hidden'}} elevation={3}>
                 <Box sx={{
                     transformOrigin: '50% 100%',
